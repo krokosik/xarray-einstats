@@ -16,6 +16,7 @@ from .linalg import (
     matrix_rank,
     matrix_transpose,
     norm,
+    pinv,
     qr,
     slogdet,
     solve,
@@ -31,7 +32,7 @@ class LinAlgAccessor:
     def __init__(self, xarray_obj):
         self._obj = xarray_obj
 
-    def matrix_transpose(self, dims):
+    def matrix_transpose(self, dims=None):
         """Call :func:`xarray_einstats.linalg.matrix_transpose` on this DataArray."""
         return matrix_transpose(self._obj, dims=dims)
 
@@ -119,6 +120,10 @@ class LinAlgAccessor:
     def inv(self, dims=None, **kwargs):
         """Call :func:`xarray_einstats.linalg.inv` on this DataArray."""
         return inv(self._obj, dims=dims, **kwargs)
+
+    def pinv(self, dims=None, **kwargs):
+        """Call :func:`xarray_einstats.linalg.pinv` on this DataArray."""
+        return pinv(self._obj, dims=dims, **kwargs)
 
 
 @xr.register_dataarray_accessor("einops")
