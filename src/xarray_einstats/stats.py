@@ -531,13 +531,22 @@ def _apply_reduce_func(
     else:
         core_dims = [dims]
     out_da = xr.apply_ufunc(
-        func, da, input_core_dims=[core_dims], output_core_dims=[[]], kwargs=func_kwargs, **kwargs
+        func,
+        da,
+        input_core_dims=[core_dims],
+        output_core_dims=[[]],
+        kwargs=func_kwargs,
+        **kwargs,
     )
     return out_da
 
 
 def rankdata(
-    da: xr.DataArray, dims: DimOrDims = None, *, method: str | None = None, **kwargs: Any
+    da: xr.DataArray,
+    dims: DimOrDims = None,
+    *,
+    method: str | None = None,
+    **kwargs: Any,
 ) -> xr.DataArray:
     """Wrap and extend :func:`scipy.stats.rankdata`.
 
@@ -585,7 +594,11 @@ def gmean(
 
 
 def hmean(
-    da: xr.DataArray | xr.Dataset, dims: DimOrDims = None, *, dtype: Any = None, **kwargs: Any
+    da: xr.DataArray | xr.Dataset,
+    dims: DimOrDims = None,
+    *,
+    dtype: Any = None,
+    **kwargs: Any,
 ) -> xr.DataArray | xr.Dataset:
     """Wrap and extend :func:`scipy.stats.hmean`.
 

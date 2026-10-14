@@ -13,9 +13,9 @@
 """
 
 import sys
-from collections.abc import Callable, Hashable, Iterable, Sequence
+from collections.abc import Callable, Generator, Hashable, Iterable, Sequence
 from contextlib import contextmanager
-from typing import Any, Generator, Literal, overload
+from typing import Any, Literal, final, overload
 
 import numpy as np
 import xarray as xr
@@ -189,6 +189,7 @@ def default_dims(
         _linalg.get_default_dims = original_get_default_dims
 
 
+@final
 class PairHandler:
     def __init__(self, all_dims: set[Hashable], keep_dims: set[Hashable]) -> None:
         self.potential_out_dims = keep_dims.union(all_dims)
@@ -229,7 +230,9 @@ class PairHandler:
 
 
 def _einsum_parent(
-    dims: list[list[Hashable]], *operands: xr.DataArray, keep_dims: set[Hashable] = frozenset()
+    dims: list[list[Hashable]],
+    *operands: xr.DataArray,
+    keep_dims: set[Hashable] = frozenset(),
 ) -> tuple[str, list[list[Hashable]], list[Hashable]]:
     """Preprocess inputs to call :func:`numpy.einsum` or :func:`numpy.einsum_path`.
 
@@ -308,7 +311,11 @@ def _translate_pattern_string(subscripts: str) -> list[list[str]]:
 
 
 def _einsum_path(
-    dims: Any, *operands: Any, keep_dims: Any = frozenset(), optimize: Any = None, **kwargs: Any
+    dims: Any,
+    *operands: Any,
+    keep_dims: Any = frozenset(),
+    optimize: Any = None,
+    **kwargs: Any,
 ) -> Any:
     """Wrap :func:`numpy.einsum_path` directly."""
     op_kwargs = {} if optimize is None else {"optimize": optimize}
@@ -459,7 +466,12 @@ def einsum(
 
 
 def matmul(
-    da: xr.DataArray, db: xr.DataArray, dims: Dims = None, *, out_append: str = "2", **kwargs: Any
+    da: xr.DataArray,
+    db: xr.DataArray,
+    dims: Dims = None,
+    *,
+    out_append: str = "2",
+    **kwargs: Any,
 ) -> xr.DataArray:
     """Wrap :func:`numpy.linalg.matmul`.
 
@@ -521,7 +533,8 @@ def matmul(
     )
     if rename:
         return matmul_aux.rename(
-            __aux_dim11__=dim11, __aux_dim22__=dim22 + out_append if dim22 == dim11 else dim22
+            __aux_dim11__=dim11,
+            __aux_dim22__=dim22 + out_append if dim22 == dim11 else dim22,
         )
     return matmul_aux
 
@@ -584,7 +597,12 @@ def matrix_power(da: xr.DataArray, n: int, dims: Dims = None, **kwargs: Any) -> 
     if dims is None:
         dims = _attempt_default_dims("matrix_power", da.dims)
     return xr.apply_ufunc(
-        np.linalg.matrix_power, da, n, input_core_dims=[dims, []], output_core_dims=[dims], **kwargs
+        np.linalg.matrix_power,
+        da,
+        n,
+        input_core_dims=[dims, []],
+        output_core_dims=[dims],
+        **kwargs,
     )
 
 
@@ -606,7 +624,11 @@ def cholesky(da: xr.DataArray, dims: Dims = None, **kwargs: Any) -> xr.DataArray
     if dims is None:
         dims = _attempt_default_dims("cholesky", da.dims)
     return xr.apply_ufunc(
-        np.linalg.cholesky, da, input_core_dims=[dims], output_core_dims=[dims], **kwargs
+        np.linalg.cholesky,
+        da,
+        input_core_dims=[dims],
+        output_core_dims=[dims],
+        **kwargs,
     )
 
 
@@ -623,7 +645,12 @@ def qr(
 
 @overload
 def qr(
-    da: xr.DataArray, dims: Dims = None, *, mode: Literal["r"], out_append: str = "2", **kwargs: Any
+    da: xr.DataArray,
+    dims: Dims = None,
+    *,
+    mode: Literal["r"],
+    out_append: str = "2",
+    **kwargs: Any,
 ) -> xr.DataArray: ...
 
 
@@ -784,7 +811,11 @@ def svd(
         da,
         input_core_dims=[dims],
         output_core_dims=out_dims,
-        kwargs={"full_matrices": full_matrices, "compute_uv": compute_uv, "hermitian": hermitian},
+        kwargs={
+            "full_matrices": full_matrices,
+            "compute_uv": compute_uv,
+            "hermitian": hermitian,
+        },
         **kwargs,
     )
 
@@ -808,7 +839,11 @@ def eig(da: xr.DataArray, dims: Dims = None, **kwargs: Any) -> tuple[xr.DataArra
     if dims is None:
         dims = _attempt_default_dims("eig", da.dims)
     return xr.apply_ufunc(
-        np.linalg.eig, da, input_core_dims=[dims], output_core_dims=[dims[-1:], dims], **kwargs
+        np.linalg.eig,
+        da,
+        input_core_dims=[dims],
+        output_core_dims=[dims[-1:], dims],
+        **kwargs,
     )
 
 
@@ -860,7 +895,11 @@ def eigvals(da: xr.DataArray, dims: Dims = None, **kwargs: Any) -> xr.DataArray:
     if dims is None:
         dims = _attempt_default_dims("eigvals", da.dims)
     return xr.apply_ufunc(
-        np.linalg.eigvals, da, input_core_dims=[dims], output_core_dims=[dims[-1:]], **kwargs
+        np.linalg.eigvals,
+        da,
+        input_core_dims=[dims],
+        output_core_dims=[dims[-1:]],
+        **kwargs,
     )
 
 
@@ -1040,7 +1079,11 @@ def slogdet(
     if dims is None:
         dims = _attempt_default_dims("slogdet", da.dims)
     return xr.apply_ufunc(
-        np.linalg.slogdet, da, input_core_dims=[dims], output_core_dims=[[], []], **kwargs
+        np.linalg.slogdet,
+        da,
+        input_core_dims=[dims],
+        output_core_dims=[[], []],
+        **kwargs,
     )
 
 
@@ -1071,7 +1114,13 @@ def trace(
     """
     if dims is None:
         dims = _attempt_default_dims("trace", da.dims)
-    trace_kwargs = {"offset": offset, "dtype": dtype, "out": out, "axis1": -2, "axis2": -1}
+    trace_kwargs = {
+        "offset": offset,
+        "dtype": dtype,
+        "out": out,
+        "axis1": -2,
+        "axis2": -1,
+    }
     return xr.apply_ufunc(np.trace, da, input_core_dims=[dims], kwargs=trace_kwargs, **kwargs)
 
 
@@ -1178,7 +1227,12 @@ def solve(da: xr.DataArray, db: xr.DataArray, dims: Dims = None, **kwargs: Any) 
     in_dims = [dims[:2], [b_dim, k_dim]]
     out_dims = [[y_dim, k_dim]]
     da_out = xr.apply_ufunc(
-        np.linalg.solve, da, db, input_core_dims=in_dims, output_core_dims=out_dims, **kwargs
+        np.linalg.solve,
+        da,
+        db,
+        input_core_dims=in_dims,
+        output_core_dims=out_dims,
+        **kwargs,
     )
     if remove_k:
         return da_out.squeeze(k_dim, drop=True)

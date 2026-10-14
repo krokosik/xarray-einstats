@@ -53,7 +53,9 @@ def generate_mcmc_like_dataset(seed: int | Sequence[int] | None = None) -> xr.Da
     return ds
 
 
-def generate_matrices_dataarray(seed: int | Sequence[int] | None = None) -> xr.DataArray:
+def generate_matrices_dataarray(
+    seed: int | Sequence[int] | None = None,
+) -> xr.DataArray:
     """Generate a 4d DataArray representing a batch of matrices.
 
     Parameters

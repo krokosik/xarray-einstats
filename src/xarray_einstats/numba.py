@@ -217,7 +217,11 @@ def searchsorted(
 
 
 def ecdf(
-    da: xr.DataArray, dims: DimOrDims = None, *, npoints: int | None = None, **kwargs: Any
+    da: xr.DataArray,
+    dims: DimOrDims = None,
+    *,
+    npoints: int | None = None,
+    **kwargs: Any,
 ) -> xr.DataArray:
     """Compute the x and y values of ecdf plots in a vectorized way.
 
