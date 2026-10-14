@@ -134,7 +134,7 @@ def _attempt_default_dims(
     except MissingMonkeypatchError:
         raise TypeError(
             f"{func} missing required argument dims. Use "
-            "xarray_einstats.linalg.default_dims context manager or pass dims explicitly"
+            + "xarray_einstats.linalg.default_dims context manager or pass dims explicitly"
         ) from None
     return aux
 
@@ -1166,7 +1166,7 @@ def solve(da: xr.DataArray, db: xr.DataArray, dims: Dims = None, **kwargs: Any) 
         if k_dim in da:
             raise ValueError(
                 f"Found {k_dim} in `da`. If provided, the 3rd element of 'dims' "
-                "can only be in `db`."
+                + "can only be in `db`."
             )
     else:
         # a: (..., M, M) and b: (..., M) is not supported, so we add a dummy K

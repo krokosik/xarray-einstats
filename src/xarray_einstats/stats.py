@@ -108,7 +108,7 @@ def _asdataarray(x_or_q: Any, dim_name: str) -> xr.DataArray:
         return xr.DataArray(x_or_q_ary, dims=[dim_name], coords={dim_name: np.asarray(x_or_q)})
     raise ValueError(
         "To evaluate distribution methods on data with >=2 dims,"
-        " the input needs to be an xarray.DataArray"
+        + " the input needs to be an xarray.DataArray"
     )
 
 
@@ -345,9 +345,9 @@ def _add_documented_method(cls, wrapped_cls, methods, extra_docs=None):
             method,
             "__doc__",
             f"Method wrapping ``.{method_name}`` of the input distribution "
-            "with :func:`xarray.apply_ufunc`\n\nUsage examples available at "
-            f":ref:`stats_tutorial/dists`.\n\n{extra_doc}\n\nReturns\n-------\nDataArray\n\n"
-            f"See Also\n--------\n:meth:`scipy.stats.{wrapped_cls}.{method_name}`",
+            + "with :func:`xarray.apply_ufunc`\n\nUsage examples available at "
+            + f":ref:`stats_tutorial/dists`.\n\n{extra_doc}\n\nReturns\n-------\nDataArray\n\n"
+            + f"See Also\n--------\n:meth:`scipy.stats.{wrapped_cls}.{method_name}`",
         )
         setattr(cls, method_name, method)
 
@@ -408,7 +408,7 @@ class multivariate_normal:  # pylint: disable=invalid-name
     ) -> tuple[xr.DataArray, xr.DataArray, list[Hashable]]:
         base_error = (
             "No value found for parameter {param}. It needs to be defined either at class "
-            "initialization time or when calling its methods"
+            + "initialization time or when calling its methods"
         )
         mean = mean if mean is not None else self.mean
         if mean is None:

@@ -108,7 +108,7 @@ def process_pattern_list(
             if len(subitem) != 1:
                 raise ValueError(
                     "dicts in pattern list must have a single key but instead "
-                    f"found {len(subitem)}: {subitem.keys()}"
+                    + f"found {len(subitem)}: {subitem.keys()}"
                 )
             key, values = list(subitem.items())[0]
             if isinstance(values, Hashable):
@@ -125,7 +125,7 @@ def process_pattern_list(
         else:
             raise ValueError(
                 f"Found unsupported pattern type: {type(subitem)}, double check the docs. "
-                "This could be for example is using lists/tuples as elements of in_dims argument"
+                + "This could be for example is using lists/tuples as elements of in_dims argument"
             )
     return out, out_names, " ".join(txt)
 
