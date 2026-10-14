@@ -1,102 +1,114 @@
-# File generated with docstub
+from typing import Any, Literal, overload
 
+import numpy as np
 import xarray as xr
-from _typeshed import Incomplete
 
-from .linalg import (
-    cholesky,
-    cond,
-    det,
-    diagonal,
-    eig,
-    eigh,
-    eigvals,
-    eigvalsh,
-    inv,
-    matmul,
-    matrix_power,
-    matrix_rank,
-    matrix_transpose,
-    norm,
-    qr,
-    slogdet,
-    solve,
-    svd,
-    trace,
-)
+from ._types import Dims
 
 class LinAlgAccessor:
-    def __init__(self, xarray_obj: Incomplete) -> None: ...
-    def matrix_transpose(self, dims: Incomplete) -> None: ...
-    def matrix_power(self, n: Incomplete, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
-    def matmul(self, other: Incomplete, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
-    def cholesky(self, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
+    def __init__(self, xarray_obj: xr.DataArray) -> None: ...
+    def matrix_transpose(self, dims: Dims = None) -> xr.DataArray: ...
+    def matrix_power(self, n: int, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
+    def matmul(self, other: xr.DataArray, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
+    def cholesky(self, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
+    @overload
     def qr(
         self,
-        dims: Incomplete = ...,
+        dims: Dims = None,
         *,
-        mode: Incomplete = ...,
-        out_append: Incomplete = ...,
-        **kwargs: Incomplete,
-    ) -> None: ...
+        mode: Literal["reduced", "complete", "raw"] = "reduced",
+        out_append: str = "2",
+        **kwargs: Any,
+    ) -> tuple[xr.DataArray, xr.DataArray]: ...
+    @overload
+    def qr(
+        self, dims: Dims = None, *, mode: Literal["r"], out_append: str = "2", **kwargs: Any
+    ) -> xr.DataArray: ...
+    @overload
+    def qr(
+        self, dims: Dims = None, *, mode: str = "reduced", out_append: str = "2", **kwargs: Any
+    ) -> tuple[xr.DataArray, xr.DataArray] | xr.DataArray: ...
+    @overload
     def svd(
         self,
-        dims: Incomplete = ...,
+        dims: Dims = None,
         *,
-        full_matrices: Incomplete = ...,
-        compute_uv: Incomplete = ...,
-        hermitian: Incomplete = ...,
-        out_append: Incomplete = ...,
-        **kwargs: Incomplete,
-    ) -> None: ...
-    def eig(self, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
+        full_matrices: bool = True,
+        compute_uv: Literal[True] = True,
+        hermitian: bool = False,
+        out_append: str = "2",
+        **kwargs: Any,
+    ) -> tuple[xr.DataArray, xr.DataArray, xr.DataArray]: ...
+    @overload
+    def svd(
+        self,
+        dims: Dims = None,
+        *,
+        full_matrices: bool = True,
+        compute_uv: Literal[False],
+        hermitian: bool = False,
+        out_append: str = "2",
+        **kwargs: Any,
+    ) -> xr.DataArray: ...
+    @overload
+    def svd(
+        self,
+        dims: Dims = None,
+        *,
+        full_matrices: bool = True,
+        compute_uv: bool = True,
+        hermitian: bool = False,
+        out_append: str = "2",
+        **kwargs: Any,
+    ) -> tuple[xr.DataArray, xr.DataArray, xr.DataArray] | xr.DataArray: ...
+    def eig(self, dims: Dims = None, **kwargs: Any) -> tuple[xr.DataArray, xr.DataArray]: ...
     def eigh(
-        self, dims: Incomplete = ..., *, UPLO: Incomplete = ..., **kwargs: Incomplete
-    ) -> None: ...
-    def eigvals(self, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
+        self, dims: Dims = None, *, UPLO: Literal["L", "U"] = "L", **kwargs: Any
+    ) -> tuple[xr.DataArray, xr.DataArray]: ...
+    def eigvals(self, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
     def eigvalsh(
-        self, dims: Incomplete = ..., *, UPLO: Incomplete = ..., **kwargs: Incomplete
-    ) -> None: ...
-    def norm(
-        self, dims: Incomplete = ..., *, ord: Incomplete = ..., **kwargs: Incomplete
-    ) -> None: ...
-    def cond(
-        self, dims: Incomplete = ..., *, p: Incomplete = ..., **kwargs: Incomplete
-    ) -> None: ...
-    def det(self, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
+        self, dims: Dims = None, *, UPLO: Literal["L", "U"] = "L", **kwargs: Any
+    ) -> xr.DataArray: ...
+    def norm(self, dims: Dims = None, *, ord: Any = None, **kwargs: Any) -> xr.DataArray: ...
+    def cond(self, dims: Dims = None, *, p: Any = None, **kwargs: Any) -> xr.DataArray: ...
+    def det(self, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
     def matrix_rank(
         self,
-        dims: Incomplete = ...,
+        dims: Dims = None,
         *,
-        tol: Incomplete = ...,
-        hermitian: Incomplete = ...,
-        **kwargs: Incomplete,
-    ) -> None: ...
-    def slogdet(self, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
+        tol: float | xr.DataArray | None = None,
+        rtol: float | xr.DataArray | None = None,
+        hermitian: bool = False,
+        **kwargs: Any,
+    ) -> xr.DataArray: ...
+    def slogdet(self, dims: Dims = None, **kwargs: Any) -> tuple[xr.DataArray, xr.DataArray]: ...
     def trace(
         self,
-        dims: Incomplete = ...,
+        dims: Dims = None,
         *,
-        offset: Incomplete = ...,
-        dtype: Incomplete = ...,
-        out: Incomplete = ...,
-        **kwargs: Incomplete,
-    ) -> None: ...
-    def diagonal(
-        self, dims: Incomplete = ..., *, offset: Incomplete = ..., **kwargs: Incomplete
-    ) -> None: ...
-    def solve(self, db: Incomplete, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
-    def inv(self, dims: Incomplete = ..., **kwargs: Incomplete) -> None: ...
+        offset: int = 0,
+        dtype: np.typing.DTypeLike | None = None,
+        out: np.ndarray | None = None,
+        **kwargs: Any,
+    ) -> xr.DataArray: ...
+    def diagonal(self, dims: Dims = None, *, offset: int = 0, **kwargs: Any) -> xr.DataArray: ...
+    def solve(self, db: xr.DataArray, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
+    def inv(self, dims: Dims = None, **kwargs: Any) -> xr.DataArray: ...
+    def pinv(
+        self,
+        dims: Dims = None,
+        *,
+        rcond: float | xr.DataArray | None = None,
+        rtol: float | xr.DataArray | None = None,
+        hermitian: bool = False,
+        **kwargs: Any,
+    ) -> xr.DataArray: ...
 
 class EinopsAccessor:
-    def __init__(self, xarray_obj: Incomplete) -> None: ...
+    def __init__(self, xarray_obj: xr.DataArray) -> None: ...
     def rearrange(
-        self, pattern: Incomplete, pattern_in: Incomplete = ..., **kwargs: Incomplete
-    ) -> None: ...
+        self, pattern: str, pattern_in: list[Any] | None = None, **kwargs: Any
+    ) -> xr.DataArray: ...
     def reduce(
-        self,
-        pattern: Incomplete,
-        reduction: Incomplete,
-        pattern_in: Incomplete = ...,
-        **kwargs: Incomplete,
-    ) -> None: ...
+        self, pattern: str, reduction: str | Any, pattern_in: list[Any] | None = None, **kwargs: Any
+    ) -> xr.DataArray: ...

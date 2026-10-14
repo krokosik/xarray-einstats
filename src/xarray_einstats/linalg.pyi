@@ -3,12 +3,14 @@
 import numbers
 from collections.abc import Hashable, Iterable, Sequence
 from contextlib import contextmanager
-from typing import Callable, Generator, Literal
+from typing import Any, Callable, Generator, Literal
 
 import numpy as np
 import xarray
 from _typeshed import Incomplete
 from numpy.typing import NDArray
+
+from ._types import Dims
 
 __all__ = [
     "matrix_power",
@@ -77,18 +79,18 @@ def einsum(
     *operands: xarray.DataArray,
     keep_dims: set[Hashable] = ...,
     out_append: str = ...,
-    einsum_kwargs: dict | None = ...,
+    einsum_kwargs: dict[str, Any] | None = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def matmul(
     da: xarray.DataArray,
     db: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     out_append: str = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
-def matrix_transpose(da: xarray.DataArray, dims: list[str] | None = ...) -> xarray.DataArray: ...
+def matrix_transpose(da: xarray.DataArray, dims: Dims = ...) -> xarray.DataArray: ...
 def matrix_power(
     da: xarray.DataArray, n: int, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
 ) -> xarray.DataArray: ...
@@ -144,7 +146,7 @@ def cond(
     da: xarray.DataArray,
     dims: Sequence[Hashable] | None = ...,
     *,
-    p: int | Literal[np.inf, "fro"] | None = ...,
+    p: int | float | Literal["fro"] | None = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def det(
@@ -168,7 +170,7 @@ def trace(
     *,
     offset: int = ...,
     dtype: np.typing.DTypeLike | None = ...,
-    out: NDArray | None = ...,
+    out: NDArray[Any] | None = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def diagonal(
@@ -184,9 +186,7 @@ def solve(
     dims: Sequence[Hashable] | None = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
-def inv(
-    da: xarray.DataArray, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
-) -> xarray.DataArray: ...
+def inv(da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete) -> xarray.DataArray: ...
 def pinv(
     da: xarray.DataArray,
     dims: Sequence[Hashable] | None = ...,
@@ -198,5 +198,5 @@ def pinv(
 ) -> xarray.DataArray: ...
 @contextmanager
 def default_dims(
-    func_or_dims: Callable | Iterable,
+    func_or_dims: Callable[..., Any] | Iterable[Any],
 ) -> Generator[None, None, None]: ...
