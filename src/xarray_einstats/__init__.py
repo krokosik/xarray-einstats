@@ -130,7 +130,7 @@ def zeros_ref(
 
     Parameters
     ----------
-    *args : iterable of (DataArray or Dataset)
+    *args : DataArray or Dataset
         Reference objects from which the lengths and coordinate values (if any)
         of the given `dims` will be taken.
     dims : sequence of hashable
@@ -162,7 +162,7 @@ def empty_ref(
 
     Parameters
     ----------
-    *args : iterable of (DataArray or Dataset)
+    *args : DataArray or Dataset
         Reference objects from which the lengths and coordinate values (if any)
         of the given `dims` will be taken.
     dims : sequence of hashable
@@ -194,7 +194,7 @@ def ones_ref(
 
     Parameters
     ----------
-    *args : iterable of (DataArray or Dataset)
+    *args : DataArray or Dataset
         Reference objects from which the lengths and coordinate values (if any)
         of the given `dims` will be taken.
     dims : sequence of hashable

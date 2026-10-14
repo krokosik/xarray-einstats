@@ -3,7 +3,7 @@
 # pylint: disable=redefined-builtin
 
 from collections.abc import Callable, Hashable
-from typing import Any, Literal, overload
+from typing import Any, Literal, final, overload
 
 import xarray as xr
 
@@ -33,6 +33,7 @@ from .linalg import (
 
 
 @xr.register_dataarray_accessor("linalg")
+@final
 class LinAlgAccessor:
     """Class that registers accessors for linalg functions to the DataArray class."""
 
@@ -226,6 +227,7 @@ class LinAlgAccessor:
 
 
 @xr.register_dataarray_accessor("einops")
+@final
 class EinopsAccessor:
     """Class that registers accessors for einops functions to the DataArray class."""
 
