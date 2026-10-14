@@ -10,6 +10,7 @@ from _typeshed import Incomplete
 from numpy.typing import ArrayLike
 
 from . import _remove_indexes_to_reduce, sort
+from ._types import DimOrDims
 
 __all__ = ["histogram", "searchsorted", "ecdf"]
 
@@ -25,12 +26,12 @@ def searchsorted_ufunc(da: Incomplete, v: Incomplete, res: Incomplete) -> None: 
 def searchsorted(
     da: xarray.DataArray,
     v: xarray.DataArray,
-    dims: Hashable | Sequence[Hashable] | None = ...,
+    dims: DimOrDims = ...,
     **kwargs: Incomplete,
 ) -> None: ...
 def ecdf(
     da: xarray.DataArray,
-    dims: Hashable | Sequence[Hashable] | None = ...,
+    dims: DimOrDims = ...,
     *,
     npoints: int | None = ...,
     **kwargs: Incomplete,

@@ -92,14 +92,12 @@ def matmul(
 ) -> xarray.DataArray: ...
 def matrix_transpose(da: xarray.DataArray, dims: Dims = ...) -> xarray.DataArray: ...
 def matrix_power(
-    da: xarray.DataArray, n: int, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
+    da: xarray.DataArray, n: int, dims: Dims = ..., **kwargs: Incomplete
 ) -> xarray.DataArray: ...
-def cholesky(
-    da: xarray.DataArray, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
-) -> xarray.DataArray: ...
+def cholesky(da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete) -> xarray.DataArray: ...
 def qr(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     mode: str = ...,
     out_append: str = ...,
@@ -107,7 +105,7 @@ def qr(
 ) -> tuple[xarray.DataArray, xarray.DataArray] | xarray.DataArray: ...
 def svd(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     full_matrices: bool = ...,
     compute_uv: Incomplete = ...,
@@ -116,45 +114,41 @@ def svd(
     **kwargs: Incomplete,
 ) -> tuple[xarray.DataArray, xarray.DataArray, xarray.DataArray] | xarray.DataArray: ...
 def eig(
-    da: xarray.DataArray, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
+    da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete
 ) -> tuple[xarray.DataArray, xarray.DataArray]: ...
 def eigh(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     UPLO: Incomplete = ...,
     **kwargs: Incomplete,
 ) -> tuple[xarray.DataArray, xarray.DataArray]: ...
-def eigvals(
-    da: xarray.DataArray, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
-) -> xarray.DataArray: ...
+def eigvals(da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete) -> xarray.DataArray: ...
 def eigvalsh(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     UPLO: Incomplete = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def norm(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     ord: numbers.Number | Literal["fro", "nuc"] | None = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def cond(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     p: int | float | Literal["fro"] | None = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
-def det(
-    da: xarray.DataArray, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
-) -> xarray.DataArray: ...
+def det(da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete) -> xarray.DataArray: ...
 def matrix_rank(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     tol: float | xarray.DataArray | None = ...,
     rtol: float | xarray.DataArray | None = ...,
@@ -162,11 +156,11 @@ def matrix_rank(
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def slogdet(
-    da: xarray.DataArray, dims: Sequence[Hashable] | None = ..., **kwargs: Incomplete
+    da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete
 ) -> tuple[xarray.DataArray, xarray.DataArray]: ...
 def trace(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     offset: int = ...,
     dtype: np.typing.DTypeLike | None = ...,
@@ -175,7 +169,7 @@ def trace(
 ) -> xarray.DataArray: ...
 def diagonal(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     offset: int = ...,
     **kwargs: Incomplete,
@@ -183,13 +177,13 @@ def diagonal(
 def solve(
     da: xarray.DataArray,
     db: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     **kwargs: Incomplete,
 ) -> xarray.DataArray: ...
 def inv(da: xarray.DataArray, dims: Dims = ..., **kwargs: Incomplete) -> xarray.DataArray: ...
 def pinv(
     da: xarray.DataArray,
-    dims: Sequence[Hashable] | None = ...,
+    dims: Dims = ...,
     *,
     rcond: float | xarray.DataArray | None = ...,
     rtol: float | xarray.DataArray | None = ...,

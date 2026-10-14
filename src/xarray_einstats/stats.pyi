@@ -10,6 +10,7 @@ from numpy.linalg import LinAlgError
 from scipy import special, stats
 
 from . import _remove_indexes_to_reduce
+from ._types import DimOrDims
 from .linalg import cholesky, eigh
 
 __all__ = [
@@ -108,7 +109,7 @@ def _apply_reduce_func(
 ) -> None: ...
 def rankdata(
     da: xarray.DataArray,
-    dims: Hashable | Sequence[Hashable] | None = ...,
+    dims: DimOrDims = ...,
     *,
     method: str | None = ...,
     **kwargs: Incomplete,
